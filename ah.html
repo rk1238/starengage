@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+
+<script type="text/javascript">
+
+	function checkPhonenumber()
+	{ 
+		var phonenum=document.getElementById('phonenum').value;
+		 xmlhttp = new XMLHttpRequest();
+		 xmlhttp.onreadystatechange=function()
+		 {
+		 	if(this.readyState == 4 && this.status == 200)
+		 	{
+		 			var a=this.responseText;
+		 			 alert("");
+		 			
+		 	}
+		 };
+		
+		 xmlhttp.open("POST","hel.php?q="+phonenum,true);
+         xmlhttp.send();
+
+	}
+</script>
+</head>
+<body>
+	<div class="w3-container">
+  <div class="w3-half">
+  	<input class="w3-input" type="text" id="phonenum" name="phonenu" placeholder="Enter Mobile Number">
+  	</div>
+
+  	<div class="w3-half">
+  		<button class="w3-button w3-white w3-border w3-border-red w3-round-large" onclick="checkPhonenumber()">Button</button>
+  	</div>
+  	
+</div>
+</body>
+</html>

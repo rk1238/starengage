@@ -1,0 +1,353 @@
+<html>
+<head>
+<style>
+</style>
+</head>
+<body >
+  <center>
+    <input type="text" id="phonenumber" placeholder="phonenumber" onkeyup="validPhonenumber()"><p id="phonevalid" ></p><br>
+    <input type="text" id="firstname" placeholder="firstname" onkeyup="validFirstName(this.value)" disabled><br><p id="firstnamevalid"></p>
+    <input type="text" id="lastname" placeholder="lastname" onkeyup="validLastName(this.value)" disabled><br><p id="lastnamevalid"></p>
+    <input type="text" id="companyname" placeholder="company name" onkeyup="validCompanyname(this.value)" disabled><br><p id="companynamevalid"></p>
+    <input type="email" id="email" placeholder="Email" onkeyup="validEmail(this.value)" disabled><br><p id="emailvalid"></p>
+    <input type="text" id="website" placeholder="website" onkeyup="validWebsite(this.value)" disabled><br><p id="websitevalid"></p>
+    <input type="text" id="country" placeholder="country"   onkeyup="validCountry(this.value)" disabled><br><p id="countryvalid"></p>
+
+    <input type="radio" name="gender" id="gender" value="male" onclick="validGender()" disabled>male
+    <input type="radio" name="gender" id="gender" value="female" disabled  onclick="validGender()">female<br>
+    <p id="gendervalid"></p>
+
+
+    <input type="password" id="password" placeholder="enter password" onkeyup="validPassword(this.value)" disabled=""><br>
+    <p id="passwordvalid"></p>
+    <input type="password" id="repassword" placeholder="reenter password" onkeyup="checkPassword(this.value)" disabled="">
+<p id="passwordmatch"></p>
+    <button id="signupbutton" onclick="register()" disabled="">SignUp</button>
+<p id="ro"></p>
+
+<br><br><br><br><br><br><br><br><br><br>
+    <input type="text" id="otp" placeholder="Enter otp" disabled><p id="otperror"></p>
+    <button onclick="verifyOTP()" id="otpverify" disabled="">Verify</button>
+</center>
+</body>
+</html>
+<script type="text/javascript">
+
+
+
+
+
+
+
+
+
+  //////validater
+///validating phonenumber
+   function validPhonenumber()
+  {
+    var phonenumber=document.getElementById("phonenumber").value;
+    var pattern = /^\d+$/;
+    var k= pattern.test(phonenumber);
+    //this is for number or not
+    if(!k)
+    {
+      document.getElementById("phonevalid").innerText="only numbers are allowed";
+    }
+    else
+    {
+      var s=phonenumber.length;
+      if(s!=10)
+      {
+        document.getElementById("phonevalid").innerText="number must be 10 digits"; 
+      }
+      else
+      {
+        //////////
+    var verifyingphonenumber=new XMLHttpRequest();
+    verifyingphonenumber.onreadystatechange=function()
+    {
+      if(this.status==200 && this.readyState==4)
+      {
+        var res=this.responseText;
+        if(res=="sucessfullysentotptoyourmobile")
+        {
+          document.getElementById("phonevalid").innerText="Otp sent to registered mobile number";
+          //this is for set otp box enabled
+          document.getElementById("otp").disabled = false;
+          //this is for set otp button enabled
+           document.getElementById("otpverify").disabled = false;
+           //this is for set phone number box disabled
+            document.getElementById("phonenumber").disabled = true;
+        }
+        else
+        {
+          document.getElementById("phonevalid").innerText=this.responseText;
+        }
+        
+
+      }
+    };
+    verifyingphonenumber.open("POST","hel.php?phonenumber="+phonenumber,true);
+    verifyingphonenumber.send();
+        ////////////
+      }
+     
+     
+
+    }
+  }
+  ///for verifying that phonenumber is already registered or not
+
+
+  //for verifying the otp
+  function verifyOTP()
+  {
+     var otpvalue=document.getElementById("otp").value;
+    var verifyingotp=new XMLHttpRequest();
+    verifyingotp.onreadystatechange=function()
+    {
+      if(this.status==200 && this.readyState==4)
+      {
+        if(this.responseText=="otpsuccess")
+        {
+                ///enable all text fields 
+                document.getElementById("firstname").disabled=false;
+                
+                document.getElementById("otperror").innerText="";
+        }
+        else
+        {
+            document.getElementById("otperror").innerText="please enter corect otp";
+        }
+        
+      }
+    };
+    verifyingotp.open("POST","veri.php?otpvalue="+otpvalue,true);
+    verifyingotp.send();
+      
+    }
+    
+  
+  //////this is for validate the  firstname
+
+  function validFirstName(firstname)
+  {
+   if(firstname.search(/[^a-zA-Z]+/) ===-1)
+   {
+    var firstnamelength=firstname.length;
+    if(firstnamelength>3)
+    {
+                document.getElementById("lastname").disabled=false;
+                document.getElementById("firstnamevalid").innerText="";
+               
+    }
+    else
+    {
+      document.getElementById("firstnamevalid").innerText="must be 3 leters";
+    }
+
+   }
+   else
+   {
+    document.getElementById("firstnamevalid").innerText="only charecters are allowed";
+   }
+
+  }
+//***************************************firstname*****************************************//
+
+//////this is for validate the  firstname
+
+  function validLastName(lastname)
+  {
+   if(lastname.search(/[^a-zA-Z]+/) ===-1)
+   {
+    var lastnamelength=lastname.length;
+    if(lastnamelength>3)
+    {
+              
+              document.getElementById("companyname").disabled=false;
+              document.getElementById("lastnamevalid").innerText="";
+               
+    }
+    else
+    {
+      document.getElementById("lastnamevalid").innerText="must be 3 leters";
+    }
+
+   }
+   else
+   {
+    document.getElementById("lastnamevalid").innerText="only charecters are allowed";
+   }
+
+  }
+//***************************************lastname*****************************************//
+
+/////this is for company name
+function validCompanyname(companyname)
+  {
+   
+    var companynamelength=companyname.length;
+    if(companynamelength>3)
+    {
+              
+                
+                
+                document.getElementById("email").disabled=false;
+                document.getElementById("companynamevalid").innerText="";
+               
+    }
+    else
+    {
+      document.getElementById("companynamevalid").innerText="must be 3 leters";
+    }
+
+
+  }
+//***************************************lastname*****************************************//
+
+/////this is for email
+function validEmail(email)
+  {
+   
+    var emaillength=email.length;
+    if(emaillength>3)
+    {
+              
+                
+                document.getElementById("website").disabled=false;
+                document.getElementById("emailvalid").innerText="";
+                
+    }
+    else
+    {
+      document.getElementById("emailvalid").innerText="must be 3 leters";
+    }
+
+
+  }
+//***************************************lastname*****************************************//
+
+/////this is for website
+function validWebsite(website)
+  {
+   
+    var websitelength=website.length;
+    if(websitelength>3)
+    {
+              
+
+                document.getElementById("country").disabled=false;
+                document.getElementById("websitevalid").innerText="";
+
+    }
+    else
+    {
+      document.getElementById("websitevalid").innerText="must be 3 leters";
+    }
+
+
+  }
+//***************************************website*****************************************//
+
+
+function validCountry(country)
+  {
+   
+    var countrylength=country.length;
+    if(countrylength>3)
+    {
+              
+                document.getElementById("gender").disabled=false;
+                document.getElementById("countryvalid").innerText="";
+                
+
+    }
+    else
+    {
+      document.getElementById("countryvalid").innerText="must be 3 leters";
+    }
+
+
+  }
+//***************************************country*****************************************//
+
+////this is for gender
+function validGender()
+{
+  document.getElementById("password").disabled=false;
+  
+}
+//***************************************validgender*****************************************//
+
+
+//thi is for valipassword
+function validPassword(password)
+{
+        if(password.length>6)
+        {
+            document.getElementById("repassword").disabled=false;
+            document.getElementById("passwordvalid").innerText=""; 
+            
+        }
+        else
+        {
+            document.getElementById("passwordvalid").innerText="must be greater than 6 leters"; 
+        }
+}
+//***************************************validpassword*****************************************//
+
+//this is for matchpassword
+function checkPassword(matchpassword)
+{
+var a=document.getElementById("password").value;
+        if(matchpassword==a)
+        {
+          document.getElementById("signupbutton").disabled=false;
+           document.getElementById("passwordvalid").innerText=""; 
+        }
+        else
+        {
+
+           document.getElementById("passwordvalid").innerText="password did't match"; 
+        }
+}
+//***************************************matchpassword*****************************************//
+
+//this is for register the user
+function register()
+{
+  var phonenumber=document.getElementById("phonenumber").value;
+  var firstname=document.getElementById("firstname").value;
+  var lastname=document.getElementById("lastname").value;
+  var companyname=document.getElementById("companyname").value;
+  var email=document.getElementById("email").value;
+  var website=document.getElementById("website").value;
+  var country=document.getElementById("country").value;
+  var gender=document.getElementById("gender").value;
+  var password=document.getElementById("repassword").value;
+
+
+  registerRequest=new XMLHttpRequest();
+  registerRequest.onreadystatechange=function()
+  {
+    if(this.readyState==4&& this.status==200)
+    {
+      if(this.responseText=="success")
+      {
+        window.href="http://www.google.com";
+      }
+      else
+      {
+        document.writeln("something went wrong");
+      }
+    }
+  };
+  registerRequest.open("POST","register.php?phonenumber="+phonenumber+"&firstname="+firstname+"&lastname="+lastname+"&companyname="+companyname+"&email="+email+"&website="+website+"&country="+country+"&gender="+gender+"&password="+password,true);
+  registerRequest.send();
+
+
+
+
+}
+</script>

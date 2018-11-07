@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Brand Registration</h2>
+  <form name="brandregistration" method="post" action="brandregistrationphp.php">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" name="username"class="form-control" id="email" placeholder="Enter email" required>
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" name="password" class="form-control" id="pwd" placeholder="Enter password" required>
+    </div>
+     <div class="form-group">
+      <label for="companyname">BrandName</label>
+      <input type="text" name="companyname" class="form-control" id="pwd" placeholder="Enter BrandName" required>
+    </div>
+    
+    <input type="submit" class="btn btn-default" value="Submit">
+  </form>
+</div>
+
+</body> 
+</html>
